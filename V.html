@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Password Protected PDF</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 50px;
+    }
+    #pdfLink {
+      display: none;
+      margin-top: 20px;
+    }
+    #hint {
+      color: gray;
+      font-style: italic;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>비밀번호 보호 PDF</h1>
+  <p>PDF 파일에 접근하려면 비밀번호를 입력하세요:</p>
+
+  <form id="passwordForm">
+    <input type="password" id="passwordInput" placeholder="비밀번호 입력" required>
+    <button type="submit">제출</button>
+  </form>
+
+  <div id="hint">~비밀번호는 이 계정에서 발송된 초대 메시지의 날짜와 시간을 DD/MM/HHMM 형식(24시간제)으로 입력하십시오.
+
+예시: 메시지가 7월 10일 오후 7시 30분에 발송되었다면, 비밀번호는 10/07/1930입니다.</div>
+  <div id="pdfLink">
+    <p>비밀번호가 맞습니다!<a href="Letter.pdf" target="_blank">여기를 클릭하여 PDF를 확인하세요</a></p>
+  </div>
+
+  <script>
+    const correctPassword = "30/12/0000";  // Set the correct password here
+    const passwordInput = document.getElementById('passwordInput');
+    const passwordForm = document.getElementById('passwordForm');
+    const hintDiv = document.getElementById('hint');
+    const pdfLinkDiv = document.getElementById('pdfLink');
+
+    // Password form submit handler
+    passwordForm.addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const enteredPassword = passwordInput.value;
+
+      if (enteredPassword === correctPassword) {
+        // Correct password: show PDF link
+        pdfLinkDiv.style.display = 'block';
+        hintDiv.style.display = 'none';
+      } else {
+        // Incorrect password: show hint
+        alert("비밀번호가 틀렸습니다. 다시 시도해주세요!");
+        passwordInput.value = '';  // Clear the input field
+      }
+    });
+  </script>
+</body>
+</html>
